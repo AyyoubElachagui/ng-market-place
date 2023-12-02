@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MarketplaceType } from '../../types/marketplace.type';
 import {
   NgFor, UpperCasePipe,
 } from '@angular/common';
+import { Subscription, interval } from 'rxjs';
+
 
 @Component({
   selector: 'app-marketplace-item-list',
@@ -14,7 +16,19 @@ import {
   templateUrl: './marketplace-item-list.component.html',
   styleUrl: './marketplace-item-list.component.css'
 })
-export class MarketplaceItemListComponent {
+export class MarketplaceItemListComponent /*implements OnInit, OnDestroy*/ {
+
+  public seconds: number = 0;
+  // counterSubscription: Subscription | undefined;
+  // ngOnInit(): void {
+  //   const counter = interval(1000);
+  //   this.counterSubscription = counter.subscribe({
+  //     next: (value) => {this.seconds = value},
+  //     error: (error: any) => {console.log("Oops, Error est survenu", error)},
+  //     complete: () => {console.log("Observable est termine")},
+  //   }
+  //   )
+  // }
 
   public marketplaceItems: MarketplaceType[] = [
     {
@@ -42,5 +56,11 @@ export class MarketplaceItemListComponent {
       price: 223
     },
   ]
+
+  
+
+  // ngOnDestroy(): void {
+  //   this.counterSubscription?.unsubscribe();
+  // }
 
 }
