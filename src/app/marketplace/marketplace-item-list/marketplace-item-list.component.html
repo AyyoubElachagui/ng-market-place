@@ -1,17 +1,20 @@
 <div class="w-full h-screen bg-red-100">
     <div class="grid grid-cols-2 gap-4 justify-center mx-60">
-        <div *ngFor='let item of marketplaceItems' class="p-4 m-4 bg-red-400 flex justify-start bg-slate-200 shadow hover:shadow-md rounded-md hover:bg-slate-100">
+        <div *ngFor='let item of marketPlaceItems' class="p-4 m-4 bg-red-400 flex justify-start bg-slate-200 shadow hover:shadow-md rounded-md hover:bg-slate-100">
             
             <div class="mr-6">
-                <img [src]="item.image" alt=`{{item.title}}` width="200" height="200">
+                <img [src]="item.image" alt=`{{item.title}}` width="300" height="300">
             </div>
             <div>
-                <p class="text-2xl mb-2">{{item.title | uppercase}}</p>
-                <p class="text-sm mb-2">{{item.category}}</p>
-                <p class="text-2xl font-bold mb-2">${{item.price}}</p>
+                <p class="text-2xl mb-1">{{item.title | uppercase}}</p>
+                <p class="text-sm mb-1">{{item.category}}</p>
+                <p class="text-2xl font-bold mb-1">${{item.price}}</p>
                 <p class="text-xs">{{item.description}}</p>
+                <div>
+                    <button class="bg-green-400 text-white rounded-md py-1 px-2 my-4" *ngIf="!item.isSelected" (click)="addToCart(item)">Add to cart</button>
+                    <button class="bg-red-400 text-white rounded-md py-1 px-2 my-4" *ngIf="item.isSelected" (click)="removeFromCart(item)">Remove from cart</button>
+                </div>
             </div>
         </div>
     </div>
-    <p class="text-2xl flex justify-center">{{seconds}}</p>
 </div>

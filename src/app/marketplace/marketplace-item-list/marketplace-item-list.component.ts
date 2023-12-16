@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MarketplaceType } from '../../types/marketplace.type';
 import {
-  NgFor, UpperCasePipe,
+  NgFor, NgIf, UpperCasePipe,
 } from '@angular/common';
-import { Subscription, interval } from 'rxjs';
+import { Subscription, interval, timer } from 'rxjs';
+import { ProductService } from '../../services/product.service';
+import { CartService } from '../../services/cart.service';
 
 
 @Component({
@@ -11,56 +13,45 @@ import { Subscription, interval } from 'rxjs';
   standalone: true,
   imports: [
     NgFor,
+    NgIf,
   UpperCasePipe
   ],
   templateUrl: './marketplace-item-list.component.html',
   styleUrl: './marketplace-item-list.component.css'
 })
-export class MarketplaceItemListComponent /*implements OnInit, OnDestroy*/ {
+export class MarketplaceItemListComponent implements OnInit, OnDestroy {
 
-  public seconds: number = 0;
-  // counterSubscription: Subscription | undefined;
-  // ngOnInit(): void {
-  //   const counter = interval(1000);
-  //   this.counterSubscription = counter.subscribe({
-  //     next: (value) => {this.seconds = value},
-  //     error: (error: any) => {console.log("Oops, Error est survenu", error)},
-  //     complete: () => {console.log("Observable est termine")},
-  //   }
-  //   )
-  // }
+  productSub?: Subscription;
+  marketPlaceItems: MarketplaceType[] = [];
 
-  public marketplaceItems: MarketplaceType[] = [
-    {
-      id: 1,
-      title: 'Hello world 1',
-      category: 'ADULT',
-      image: 'https://via.placeholder.com/500',
-      description: "In publishing and graphic design, Lorem ipsum is a placeholder text ",
-      price: 12
-    },
-    {
-      id: 2,
-      title: 'Hello world 2',
-      category: 'ADULT',
-      image: 'https://via.placeholder.com/500',
-      description: "In publishing and graphic design, Lorem ipsum is a placeholder text ",
-      price: 190
-    },
-    {
-      id: 3,
-      title: 'Hello world 3',
-      category: 'ADULT',
-      image: 'https://via.placeholder.com/500',
-      description: "In publishing and graphic design, Lorem ipsum is a placeholder text ",
-      price: 223
-    },
-  ]
+  constructor(
+    public productsService: ProductService,
+    public cartService: CartService,
+  ){}
 
-  
 
-  // ngOnDestroy(): void {
-  //   this.counterSubscription?.unsubscribe();
-  // }
+  ngOnInit(): void {
+
+    this.productSub = this.productsService.getProducts().subscribe(product => {
+      this.marketPlaceItems = product;
+    })
+
+  }
+
+  addToCart = (item: MarketplaceType) => {
+    this.productsService.markProductAsSelected(item);
+    this.cartService.addItems(item);
+  }
+
+  removeFromCart = (item: MarketplaceType) => {
+    this.productsService.markProductAsUnselected(item);
+    this.cartService.removeItem(item);
+  }
+
+
+  ngOnDestroy(): void {
+    this.productSub?.unsubscribe();
+  }
 
 }
+
