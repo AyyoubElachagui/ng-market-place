@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { MarketplaceType } from '../types/marketplace.type';
 
 @Injectable({
@@ -7,18 +7,20 @@ import { MarketplaceType } from '../types/marketplace.type';
 })
 export class CartService {
 
-  private _cartItems = new BehaviorSubject<Array<{item: MarketplaceType, quantity: number}>>([]);
+  private _cartItems = new BehaviorSubject<Array<{ item: MarketplaceType, quantity: number }>>([]);
 
-  constructor() { }
+  constructor(
+  ) { }
+
 
   getCartItems = () => this._cartItems;
 
-  addItems = (item: MarketplaceType, quantity: number = 1 ) => {
+  addItems = (item: MarketplaceType, quantity: number = 1) => {
     const currentCartItems = this._cartItems.getValue();
-    const searchItem = currentCartItems.find((e) => e.item.id === item.id );
-    if(searchItem){
+    const searchItem = currentCartItems.find((e) => e.item.id === item.id);
+    if (searchItem) {
       searchItem.quantity += quantity;
-    }else{
+    } else {
       currentCartItems.push({
         item,
         quantity
@@ -27,7 +29,7 @@ export class CartService {
     this._cartItems.next(currentCartItems);
   }
 
-  removeItem = (item: MarketplaceType ) => {
+  removeItem = (item: MarketplaceType) => {
     let currentCartItems = this._cartItems.getValue();
     currentCartItems = currentCartItems.filter((e) => e.item.id !== item.id);
     this._cartItems.next(currentCartItems);

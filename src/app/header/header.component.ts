@@ -1,4 +1,4 @@
-import { Component, Input,} from '@angular/core';
+import { Component, Input, } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent{
+export class HeaderComponent {
 
   @Input()
   count: number = 0;

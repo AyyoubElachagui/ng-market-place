@@ -14,7 +14,8 @@ export class ProductService {
       category: 'ADULT',
       image: 'https://via.placeholder.com/500',
       description: "In publishing and graphic design, Lorem ipsum is a placeholder text ",
-      price: 12
+      price: 12,
+      isSelected: false,
     },
     {
       id: 2,
@@ -22,7 +23,8 @@ export class ProductService {
       category: 'ADULT',
       image: 'https://via.placeholder.com/500',
       description: "In publishing and graphic design, Lorem ipsum is a placeholder text ",
-      price: 190
+      price: 190,
+      isSelected: false,
     },
     {
       id: 3,
@@ -30,7 +32,8 @@ export class ProductService {
       category: 'ADULT',
       image: 'https://via.placeholder.com/500',
       description: "In publishing and graphic design, Lorem ipsum is a placeholder text ",
-      price: 223
+      price: 223,
+      isSelected: false,
     },
   ];
 
