@@ -15,7 +15,7 @@ export class CartService {
 
   addItems = (item: MarketplaceType, quantity: number = 1 ) => {
     const currentCartItems = this._cartItems.getValue();
-    const searchItem = currentCartItems.find((e) => e.item.id == item.id );
+    const searchItem = currentCartItems.find((e) => e.item.id === item.id );
     if(searchItem){
       searchItem.quantity += quantity;
     }else{

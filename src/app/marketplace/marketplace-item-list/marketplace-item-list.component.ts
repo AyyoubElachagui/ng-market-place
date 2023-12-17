@@ -1,11 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MarketplaceType } from '../../types/marketplace.type';
 import {
   NgFor, NgIf, UpperCasePipe,
 } from '@angular/common';
-import { Subscription, interval, timer } from 'rxjs';
-import { ProductService } from '../../services/product.service';
-import { CartService } from '../../services/cart.service';
 
 
 @Component({
@@ -19,38 +16,23 @@ import { CartService } from '../../services/cart.service';
   templateUrl: './marketplace-item-list.component.html',
   styleUrl: './marketplace-item-list.component.css'
 })
-export class MarketplaceItemListComponent implements OnInit, OnDestroy {
+export class MarketplaceItemListComponent {
 
-  productSub?: Subscription;
-  marketPlaceItems: MarketplaceType[] = [];
+  @Input()
+  item?: MarketplaceType;
 
-  constructor(
-    public productsService: ProductService,
-    public cartService: CartService,
-  ){}
+  @Output()
+  onAddToCart: EventEmitter<MarketplaceType> = new EventEmitter<MarketplaceType>();
 
+  @Output()
+  onRemoveFromCart: EventEmitter<MarketplaceType> = new EventEmitter<MarketplaceType>();
 
-  ngOnInit(): void {
-
-    this.productSub = this.productsService.getProducts().subscribe(product => {
-      this.marketPlaceItems = product;
-    })
-
+  addToCart = (item?: MarketplaceType) => {
+    this.onAddToCart.emit(item);
   }
 
-  addToCart = (item: MarketplaceType) => {
-    this.productsService.markProductAsSelected(item);
-    this.cartService.addItems(item);
-  }
-
-  removeFromCart = (item: MarketplaceType) => {
-    this.productsService.markProductAsUnselected(item);
-    this.cartService.removeItem(item);
-  }
-
-
-  ngOnDestroy(): void {
-    this.productSub?.unsubscribe();
+  removeFromCart = (item?: MarketplaceType) => {
+    this.onRemoveFromCart.emit(item);
   }
 
 }

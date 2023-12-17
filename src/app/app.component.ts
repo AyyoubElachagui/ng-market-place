@@ -12,5 +12,11 @@ import { MarketplaceComponent } from './marketplace/marketplace.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'marketplace';
+
+  countOfItems = 0
+  
+  countOfItemsInCart = (countOfItems: number) => {
+    this.countOfItems = countOfItems;
+  }
+
 }

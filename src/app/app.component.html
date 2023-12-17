@@ -1,8 +1,12 @@
 
 
 <main>
-  <app-header></app-header>
-  <app-marketplace></app-marketplace>
+  <app-header
+  [count]="countOfItems"
+  ></app-header>
+  <app-marketplace
+  (countItemsInCart)="countOfItemsInCart($event)"
+  ></app-marketplace>
 </main>
 
 
