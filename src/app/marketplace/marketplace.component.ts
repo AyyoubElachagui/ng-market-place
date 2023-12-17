@@ -17,8 +17,6 @@ import { LocalstorageService } from '../services/localstorage.service';
 export class MarketplaceComponent implements OnInit, OnDestroy{
   productSub?: Subscription;
   marketPlaceItems: MarketplaceType[] = [];
-  cacheSubscription?: Subscription;
-  data: any[] | undefined = [];
 
   constructor(
     public productsService: ProductService,
